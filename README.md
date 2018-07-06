@@ -7,7 +7,7 @@ There's a 2 methods javascript API:
 
 startRecording() - starts sampling an audio data to a memory buffer, returns nothing.
 
-stopRecording() - stops sampling an audio data, generate a virtual wav file and convert it to base64 encoding; 
+stopRecording() - stops sampling an audio data, generate a virtual wav file and converts it to base64 encoding; 
 
 JS Example (see testBase64.html):
 ``` html
@@ -32,3 +32,11 @@ JS Example (see testBase64.html):
 	}
 </SCRIPT>
 ```
+
+----
+
+Uses the portaudio lib for an audio sampling and the libsndfile for a raw to wav conversion.
+
+http://www.portaudio.com/
+
+http://www.mega-nerd.com/libsndfile/
