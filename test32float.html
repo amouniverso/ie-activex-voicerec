@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>IE-ACTIVEX-VOICEREC</title>
+<script src="FileSaver.min.js"></script>
+</head>
+<body>
+
+<h1>IE-ACTIVEX-VOICEREC demo</h1>
+<button onClick="startRecording()" id="startButton" >Start Recording</button>
+<button onClick="stopRecording()" id="stopButton" >Stop Recording</button>
+<OBJECT width=0 height=0 CLASSID="clsid:75943fab-f874-4a9d-a482-654034ae1928" id="voicerec"></OBJECT>
+<SCRIPT>
+	obj = document.getElementById('voicerec');
+	document.getElementById('stopButton').disabled = true;
+	function startRecording() {
+		var result = obj.startRecording()
+		console.log("Recording started. Speak now!");
+		document.getElementById('startButton').disabled = true;
+		document.getElementById('stopButton').disabled = false;
+	}
+	function stopRecording() {
+		return obj.stopRecording();
+		//var vbarr = new VBArray(obj.stopRecording2())
+		//console.log("Recording stoped. VBArray.toArray().length: " + vbarr.toArray().length);
+		//makeBlob(vbarr);
+	}
+	function makeBlob(vbarr) {
+		var jsArray = vbarr.toArray()
+		var arrBuff = new ArrayBuffer(jsArray.length * 4);
+		var typedArray = new Float32Array(arrBuff);
+		for (var i = 0; i < typedArray.length; i++) {
+			typedArray[i] = jsArray[i];
+		}
+		blob = new Blob([typedArray], {type: 'application/octet-binary'});
+		console.log("blob created");
+		saveAs(blob, "voicerec_44100.raw");
+		document.getElementById('stopButton').disabled = true;
+		document.getElementById('startButton').disabled = false;
+	}
+</SCRIPT>
+<SCRIPT FOR=voicerec EVENT=ParameterLoaded()>
+	console.log('event fired!');
+</SCRIPT>
+</body>
+</html>
